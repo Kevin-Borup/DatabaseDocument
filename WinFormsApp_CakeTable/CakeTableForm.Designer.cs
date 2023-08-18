@@ -35,16 +35,28 @@
             btnLeftCake = new Button();
             mnuCakeTable = new MenuStrip();
             cakeDBTableToolStripMenuItem = new ToolStripMenuItem();
-            fillToolStripMenuItem = new ToolStripMenuItem();
-            clearToolStripMenuItem = new ToolStripMenuItem();
+            mnuItemDBFill = new ToolStripMenuItem();
+            mnuItemDBClear = new ToolStripMenuItem();
             pnlCake = new Panel();
+            panel4 = new Panel();
+            rbSub30 = new RadioButton();
+            rbAll = new RadioButton();
+            label2 = new Label();
+            tbSearch = new TextBox();
+            label1 = new Label();
             panel3 = new Panel();
             btnRightCake = new Button();
             ilLeftArrows = new ImageList(components);
             ilRightArrows = new ImageList(components);
+            panel2 = new Panel();
+            btnEdit = new Button();
+            btnNew = new Button();
+            btnRemove = new Button();
             panel1.SuspendLayout();
             mnuCakeTable.SuspendLayout();
+            panel4.SuspendLayout();
             panel3.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -79,32 +91,95 @@
             // 
             // cakeDBTableToolStripMenuItem
             // 
-            cakeDBTableToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fillToolStripMenuItem, clearToolStripMenuItem });
+            cakeDBTableToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuItemDBFill, mnuItemDBClear });
             cakeDBTableToolStripMenuItem.Name = "cakeDBTableToolStripMenuItem";
             cakeDBTableToolStripMenuItem.Size = new Size(93, 20);
             cakeDBTableToolStripMenuItem.Text = "Cake DB Table";
             // 
-            // fillToolStripMenuItem
+            // mnuItemDBFill
             // 
-            fillToolStripMenuItem.Name = "fillToolStripMenuItem";
-            fillToolStripMenuItem.Size = new Size(101, 22);
-            fillToolStripMenuItem.Text = "Fill";
-            fillToolStripMenuItem.Click += fillToolStripMenuItem_Click;
+            mnuItemDBFill.Name = "mnuItemDBFill";
+            mnuItemDBFill.Size = new Size(101, 22);
+            mnuItemDBFill.Text = "Fill";
+            mnuItemDBFill.Click += fillToolStripMenuItem_Click;
             // 
-            // clearToolStripMenuItem
+            // mnuItemDBClear
             // 
-            clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            clearToolStripMenuItem.Size = new Size(101, 22);
-            clearToolStripMenuItem.Text = "Clear";
-            clearToolStripMenuItem.Click += clearToolStripMenuItem_Click;
+            mnuItemDBClear.Name = "mnuItemDBClear";
+            mnuItemDBClear.Size = new Size(101, 22);
+            mnuItemDBClear.Text = "Clear";
+            mnuItemDBClear.Click += clearToolStripMenuItem_Click;
             // 
             // pnlCake
             // 
             pnlCake.Dock = DockStyle.Fill;
-            pnlCake.Location = new Point(60, 24);
+            pnlCake.Location = new Point(60, 51);
             pnlCake.Name = "pnlCake";
-            pnlCake.Size = new Size(428, 426);
+            pnlCake.Size = new Size(428, 364);
             pnlCake.TabIndex = 1;
+            // 
+            // panel4
+            // 
+            panel4.Controls.Add(rbSub30);
+            panel4.Controls.Add(rbAll);
+            panel4.Controls.Add(label2);
+            panel4.Controls.Add(tbSearch);
+            panel4.Controls.Add(label1);
+            panel4.Dock = DockStyle.Top;
+            panel4.Location = new Point(60, 24);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(428, 27);
+            panel4.TabIndex = 0;
+            // 
+            // rbSub30
+            // 
+            rbSub30.AutoSize = true;
+            rbSub30.Location = new Point(97, 3);
+            rbSub30.Name = "rbSub30";
+            rbSub30.Size = new Size(96, 19);
+            rbSub30.TabIndex = 6;
+            rbSub30.Text = "Under 30 min";
+            rbSub30.UseVisualStyleBackColor = true;
+            rbSub30.CheckedChanged += rbSub30_CheckedChanged;
+            // 
+            // rbAll
+            // 
+            rbAll.AutoSize = true;
+            rbAll.Checked = true;
+            rbAll.Location = new Point(46, 4);
+            rbAll.Name = "rbAll";
+            rbAll.Size = new Size(45, 19);
+            rbAll.TabIndex = 5;
+            rbAll.TabStop = true;
+            rbAll.Text = "Alle";
+            rbAll.UseVisualStyleBackColor = true;
+            rbAll.CheckedChanged += rbAll_CheckedChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(254, 6);
+            label2.Name = "label2";
+            label2.Size = new Size(27, 15);
+            label2.TabIndex = 4;
+            label2.Text = "Søg";
+            // 
+            // tbSearch
+            // 
+            tbSearch.Location = new Point(287, 3);
+            tbSearch.Name = "tbSearch";
+            tbSearch.Size = new Size(138, 23);
+            tbSearch.TabIndex = 3;
+            tbSearch.TextChanged += tbSearch_TextChanged;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(7, 6);
+            label1.Name = "label1";
+            label1.Size = new Size(33, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Filter";
             // 
             // panel3
             // 
@@ -143,12 +218,58 @@
             ilRightArrows.Images.SetKeyName(0, "RightArrow.jpg");
             ilRightArrows.Images.SetKeyName(1, "RightArrowHover.jpg");
             // 
+            // panel2
+            // 
+            panel2.Controls.Add(btnEdit);
+            panel2.Controls.Add(btnNew);
+            panel2.Controls.Add(btnRemove);
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(60, 415);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(428, 35);
+            panel2.TabIndex = 0;
+            // 
+            // btnEdit
+            // 
+            btnEdit.Dock = DockStyle.Fill;
+            btnEdit.Location = new Point(75, 0);
+            btnEdit.Name = "btnEdit";
+            btnEdit.Size = new Size(278, 35);
+            btnEdit.TabIndex = 2;
+            btnEdit.Text = "Rediger";
+            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
+            // 
+            // btnNew
+            // 
+            btnNew.Dock = DockStyle.Left;
+            btnNew.Location = new Point(0, 0);
+            btnNew.Name = "btnNew";
+            btnNew.Size = new Size(75, 35);
+            btnNew.TabIndex = 4;
+            btnNew.Text = "Ny";
+            btnNew.UseVisualStyleBackColor = true;
+            btnNew.Click += btnNew_Click;
+            // 
+            // btnRemove
+            // 
+            btnRemove.Dock = DockStyle.Right;
+            btnRemove.Location = new Point(353, 0);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(75, 35);
+            btnRemove.TabIndex = 3;
+            btnRemove.Text = "Fjern";
+            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
+            // 
             // CakeTableForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(548, 450);
             Controls.Add(pnlCake);
+            Controls.Add(panel4);
+            Controls.Add(panel2);
             Controls.Add(panel3);
             Controls.Add(panel1);
             Controls.Add(mnuCakeTable);
@@ -162,7 +283,10 @@
             panel1.ResumeLayout(false);
             mnuCakeTable.ResumeLayout(false);
             mnuCakeTable.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
             panel3.ResumeLayout(false);
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -173,13 +297,23 @@
         private Panel panel1;
         private MenuStrip mnuCakeTable;
         private ToolStripMenuItem cakeDBTableToolStripMenuItem;
-        private ToolStripMenuItem fillToolStripMenuItem;
-        private ToolStripMenuItem clearToolStripMenuItem;
+        private ToolStripMenuItem mnuItemDBFill;
+        private ToolStripMenuItem mnuItemDBClear;
         private Panel pnlCake;
         private Panel panel3;
         private ImageList ilLeftArrows;
         private Button btnLeftCake;
         private Button btnRightCake;
         private ImageList ilRightArrows;
+        private Panel panel2;
+        private Button btnRemove;
+        private Button btnEdit;
+        private Button btnNew;
+        private Panel panel4;
+        private Label label1;
+        private Label label2;
+        private TextBox tbSearch;
+        private RadioButton rbSub30;
+        private RadioButton rbAll;
     }
 }

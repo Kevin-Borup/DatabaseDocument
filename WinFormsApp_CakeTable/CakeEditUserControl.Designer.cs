@@ -1,6 +1,6 @@
 ﻿namespace WinFormsApp_CakeTable
 {
-    partial class CakeUserControl
+    partial class CakeEditUserControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            btnRemove = new Button();
-            btnEdit = new Button();
             panel2 = new Panel();
             tbName = new TextBox();
             panel3 = new Panel();
@@ -45,7 +42,6 @@
             panel4 = new Panel();
             tbTime = new TextBox();
             label1 = new Label();
-            panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel7.SuspendLayout();
@@ -55,57 +51,24 @@
             panel4.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
-            // 
-            panel1.Controls.Add(btnRemove);
-            panel1.Controls.Add(btnEdit);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(318, 29);
-            panel1.TabIndex = 0;
-            // 
-            // btnRemove
-            // 
-            btnRemove.Dock = DockStyle.Right;
-            btnRemove.Location = new Point(243, 0);
-            btnRemove.Name = "btnRemove";
-            btnRemove.Size = new Size(75, 29);
-            btnRemove.TabIndex = 1;
-            btnRemove.Text = "Fjern";
-            btnRemove.UseVisualStyleBackColor = true;
-            btnRemove.Click += btnRemove_Click;
-            // 
-            // btnEdit
-            // 
-            btnEdit.Dock = DockStyle.Left;
-            btnEdit.Location = new Point(0, 0);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(75, 29);
-            btnEdit.TabIndex = 0;
-            btnEdit.Text = "Rediger";
-            btnEdit.UseVisualStyleBackColor = true;
-            btnEdit.Click += btnEdit_Click;
-            // 
             // panel2
             // 
             panel2.AutoSize = true;
             panel2.Controls.Add(tbName);
             panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 29);
+            panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(318, 36);
             panel2.TabIndex = 1;
             // 
             // tbName
             // 
-            tbName.BackColor = SystemColors.Control;
+            tbName.BackColor = SystemColors.Window;
             tbName.BorderStyle = BorderStyle.None;
             tbName.Dock = DockStyle.Top;
             tbName.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
             tbName.Location = new Point(0, 0);
             tbName.Name = "tbName";
-            tbName.ReadOnly = true;
             tbName.Size = new Size(318, 36);
             tbName.TabIndex = 0;
             tbName.Text = "Name";
@@ -116,10 +79,10 @@
             panel3.Controls.Add(panel5);
             panel3.Controls.Add(panel4);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(0, 65);
+            panel3.Location = new Point(0, 36);
             panel3.Name = "panel3";
             panel3.Padding = new Padding(5);
-            panel3.Size = new Size(318, 183);
+            panel3.Size = new Size(318, 212);
             panel3.TabIndex = 2;
             // 
             // panel7
@@ -147,17 +110,17 @@
             // 
             // tbDescription
             // 
-            tbDescription.BackColor = SystemColors.Control;
+            tbDescription.BackColor = SystemColors.Window;
             tbDescription.BorderStyle = BorderStyle.None;
             tbDescription.Dock = DockStyle.Fill;
             tbDescription.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             tbDescription.Location = new Point(20, 0);
             tbDescription.Multiline = true;
             tbDescription.Name = "tbDescription";
-            tbDescription.ReadOnly = true;
             tbDescription.Size = new Size(288, 40);
             tbDescription.TabIndex = 3;
             tbDescription.Text = "Danmark\r\n1930\r\n\r\n";
+            tbDescription.KeyDown += tbDescription_KeyDown;
             // 
             // label3
             // 
@@ -195,17 +158,17 @@
             // 
             // tbIngredients
             // 
-            tbIngredients.BackColor = SystemColors.Control;
+            tbIngredients.BackColor = SystemColors.Window;
             tbIngredients.BorderStyle = BorderStyle.None;
             tbIngredients.Dock = DockStyle.Fill;
             tbIngredients.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             tbIngredients.Location = new Point(20, 0);
             tbIngredients.Multiline = true;
             tbIngredients.Name = "tbIngredients";
-            tbIngredients.ReadOnly = true;
             tbIngredients.Size = new Size(288, 40);
             tbIngredients.TabIndex = 3;
             tbIngredients.Text = "Mel\r\nMælk\r\n";
+            tbIngredients.KeyDown += tbIngredients_KeyDown;
             // 
             // label2
             // 
@@ -230,13 +193,12 @@
             // 
             // tbTime
             // 
-            tbTime.BackColor = SystemColors.Control;
+            tbTime.BackColor = SystemColors.Window;
             tbTime.BorderStyle = BorderStyle.None;
             tbTime.Dock = DockStyle.Fill;
             tbTime.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             tbTime.Location = new Point(42, 0);
             tbTime.Name = "tbTime";
-            tbTime.ReadOnly = true;
             tbTime.Size = new Size(266, 25);
             tbTime.TabIndex = 1;
             tbTime.Text = "30";
@@ -252,17 +214,15 @@
             label1.TabIndex = 0;
             label1.Text = "Tid:";
             // 
-            // CakeUserControl
+            // CakeEditUserControl
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             Controls.Add(panel3);
             Controls.Add(panel2);
-            Controls.Add(panel1);
-            Name = "CakeUserControl";
+            Name = "CakeEditUserControl";
             Size = new Size(318, 248);
-            panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
@@ -282,10 +242,6 @@
         }
 
         #endregion
-
-        private Panel panel1;
-        private Button btnRemove;
-        private Button btnEdit;
         private Panel panel2;
         private TextBox tbName;
         private Panel panel3;

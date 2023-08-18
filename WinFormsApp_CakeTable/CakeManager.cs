@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace WinFormsApp_CakeTable
 {
@@ -15,14 +16,47 @@ namespace WinFormsApp_CakeTable
 
         }
 
+        public Cake GetSingleCake(Cake cake)
+        {
+            return DBDoc.GetSingleCake(cake);
+        }
+
+        public void InsertCake(Cake cake)
+        {
+            if (cake.Id is null)
+            {
+                DBDoc.InsertCake(cake);
+            }
+            else
+            {
+                DBDoc.UpsertCake(cake);
+            }
+        }
+
         public void RemoveCake(Cake cake)
         {
             DBDoc.DeleteCake(cake);
         }
 
-        public Cake[] GetAllCakes()
+        public List<Cake> GetAllCakes(string[] sortSearch)
         {
-            return DBDoc.GetAllCakes();
+            bool sort = sortSearch[0].Equals("Sub30");
+            bool search = !string.IsNullOrWhiteSpace(sortSearch[1]);
+
+            if (!search && !sort)
+                return DBDoc.GetCakes();
+            else if (search && sort)
+            {
+                return DBDoc.GetCakes(search, sort, sortSearch[1], 30);
+            }
+            else if (search)
+            {
+                return DBDoc.GetCakes(search, name: sortSearch[1]);
+            }
+            else //if (sort)
+            {
+                return DBDoc.GetCakes(timeSort: sort, minutes: 30);
+            }
         }
 
         public void CreateInsertCakes()

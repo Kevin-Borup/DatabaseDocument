@@ -4,6 +4,12 @@ using System.Windows.Forms;
 
 namespace WinFormsApp_CakeTable
 {
+    public enum SystemState
+    {
+        Viewing,
+        Updating,
+        Creating
+    }
     public partial class CakeTableForm : Form
     {
         CakeManager ck = new CakeManager();
@@ -12,14 +18,13 @@ namespace WinFormsApp_CakeTable
 
         List<Cake> cakes;
         CakeDisplayUserControl currentCake;
-        private bool editing;
-        private bool newCakeEdit;
         private string[] sortSearch = new string[] { "All", "" };
+
+        private SystemState state = SystemState.Viewing;
 
         public CakeTableForm()
         {
             InitializeComponent();
-            editing = false;
 
             UpdateCakes();
             LoadStartCakes();
@@ -144,27 +149,61 @@ namespace WinFormsApp_CakeTable
             }
         }
 
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            if (state == SystemState.Creating || state == SystemState.Updating) // Confirm Edit
+            {
+                var editor = this.pnlCake.Controls[0] as CakeEditUserControl;
+                if (editor != null)
+                {
+                    Cake newCake = editor.GetEditedCake();
+
+                    ck.InsertCake(newCake);
+                }
+
+                UpdateCakes();
+
+                if (state == SystemState.Creating)
+                {
+                    position = cakes.Count - 1;
+                }
+
+                RemoveDisplay();
+                this.pnlCake.Controls.Add(new CakeDisplayUserControl(cakes[position]));
+                this.pnlCake.Controls[0].Dock = DockStyle.Fill;
+                state = SystemState.Viewing;
+                UpdateEditingUI();
+            }
+            else
+            { // Normal new action
+                RemoveDisplay();
+                this.pnlCake.Controls.Add(new CakeEditUserControl());
+                this.pnlCake.Controls[0].Dock = DockStyle.Fill;
+                state = SystemState.Creating;
+                UpdateEditingUI();
+            }
+        }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            editing = !editing;
-
-            if (editing) // Initiate editing
+            if (state == SystemState.Viewing) // Initiate editing
             {
                 RemoveDisplay();
                 this.pnlCake.Controls.Add(new CakeEditUserControl(cakes[position]));
                 this.pnlCake.Controls[0].Dock = DockStyle.Fill;
+                state = SystemState.Updating;
                 UpdateEditingUI();
             }
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if (editing) // Cancellation action
+            if (state == SystemState.Creating || state == SystemState.Updating) // Cancellation action
             {
-                editing = false;
                 RemoveDisplay();
                 this.pnlCake.Controls.Add(new CakeDisplayUserControl(cakes[position]));
                 this.pnlCake.Controls[0].Dock = DockStyle.Fill;
+                state = SystemState.Viewing;
                 UpdateEditingUI();
             }
             else
@@ -190,56 +229,29 @@ namespace WinFormsApp_CakeTable
             }
         }
 
-        private void btnNew_Click(object sender, EventArgs e)
-        {
-            if (editing) // Confirm Edit
-            {
-                editing = false;
-
-                var editor = this.pnlCake.Controls[0] as CakeEditUserControl;
-                if (editor != null)
-                {
-                    Cake newCake = editor.GetEditedCake();
-
-                    ck.InsertCake(newCake);
-                }
-
-                UpdateCakes();
-
-                if (newCakeEdit)
-                {
-                    position = cakes.Count - 1;
-                }
-
-                this.pnlCake.Controls.Add(new CakeDisplayUserControl(cakes[position]));
-                this.pnlCake.Controls[0].Dock = DockStyle.Fill;
-                UpdateEditingUI();
-            }
-            else
-            { // Normal new action
-                editing = true;
-                newCakeEdit = true;
-                RemoveDisplay();
-                this.pnlCake.Controls.Add(new CakeEditUserControl());
-                this.pnlCake.Controls[0].Dock = DockStyle.Fill;
-                UpdateEditingUI();
-            }
-        }
+        
 
         private void UpdateEditingUI()
         {
-            if (editing)
+            switch (state)
             {
-                this.btnNew.Text = "Bekræft";
-                this.btnRemove.Text = "Anullér";
-                this.btnEdit.Visible = false;
-            }
-            else
-            {
-                this.btnNew.Text = "Ny";
-                this.btnRemove.Text = "Fjern";
-                this.btnEdit.Visible = true;
-                newCakeEdit = false;
+                case SystemState.Viewing:
+                    this.btnNew.Text = "Ny";
+                    this.btnRemove.Text = "Fjern";
+                    this.btnEdit.Visible = true;
+                    break;
+                case SystemState.Updating:
+                    this.btnNew.Text = "Bekræft ændring";
+                    this.btnRemove.Text = "Anullér";
+                    this.btnEdit.Visible = false;
+                    break;
+                case SystemState.Creating:
+                    this.btnNew.Text = "Opret";
+                    this.btnRemove.Text = "Anullér";
+                    this.btnEdit.Visible = false;
+                    break;
+                default:
+                    break;
             }
         }
 

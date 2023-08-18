@@ -38,9 +38,9 @@ namespace WinFormsApp_CakeTable
             cakesTable.InsertOne(cake);
         }
 
-        public void UpsertCake(Cake cake)
+        public void UpdateCake(Cake cake)
         {
-            var findFilter = buildFilter.Eq(cake.Id.ToString(), cake.Id);
+            var findFilter = buildFilter.Eq("_id", cake.Id);
             cakesTable.ReplaceOne(findFilter, cake);
         }
 
@@ -64,7 +64,7 @@ namespace WinFormsApp_CakeTable
 
         public void DeleteCake(Cake cake)
         {
-            var idFilter = buildFilter.Eq(cake.Id.ToString(), cake.Id);
+            var idFilter = buildFilter.Eq("_id", cake.Id);
             cakesTable.DeleteOne(idFilter);
         }
 

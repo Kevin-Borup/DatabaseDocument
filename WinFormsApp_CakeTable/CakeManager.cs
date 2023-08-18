@@ -29,7 +29,7 @@ namespace WinFormsApp_CakeTable
             }
             else
             {
-                DBDoc.UpsertCake(cake);
+                DBDoc.UpdateCake(cake);
             }
         }
 

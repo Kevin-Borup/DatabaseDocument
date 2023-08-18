@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Entities;
 
 namespace WinFormsApp_Mongo
 {
-    internal class Developer
+    internal class Developer : Entity
     {
-        public BsonObjectId _id { private get; set; }
         public string Name { get; set; }
         public DateTime HiringDate { get; set; }
         public string Language { get; set; }
